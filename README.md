@@ -1,16 +1,10 @@
-# flutter_application_fib1
+# Ack Fibonacci Calculators
 
-A new Flutter project.
+A Flutter project that calculates support/resistances based on Fibonacci retracement and Fibonacci rebounding. This app helps users calculate and visualize important levels in financial markets using Fibonacci theory.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- Fibonacci Retracement Calculator
+- Fibonacci Rebounding Calculator
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Punnawit Bhoopat

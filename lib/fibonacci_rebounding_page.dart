@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_fib1/fibonacci_retracement_page.dart';
+import 'fibonacci_levels.dart';
 
 class FibonacciReboundingPage extends StatefulWidget {
   @override
@@ -12,35 +13,9 @@ class _FibonacciReboundingPageState extends State<FibonacciReboundingPage> {
   final TextEditingController _lowController = TextEditingController();
   final TextEditingController _newLevelController = TextEditingController();
 
-  Map<String, double>? _resistanceLevels;
-  List<double> _levels = [
-    0.090,
-    0.146,
-    0.236,
-    0.333,
-    0.382,
-    0.500,
-    0.618,
-    0.667,
-    0.786,
-    0.887,
-    0.942,
-    1.000,
-    1.090,
-    1.146,
-    1.272,
-    1.414,
-    1.500,
-    1.618,
-    2.000,
-    2.618,
-    3.236,
-    4.236,
-    6.854
-  ]; // Fibonacci levels for rebound (resistance)
-
-  // Set of important levels to highlight
-  Set<double> _importantLevels = {0.236, 0.618};
+  Map<String, double>? _reboundingLevels;
+  List<double> _levels = levels;  // Using the levels from the imported file
+  Set<double> _importantLevels = importantLevels;
 
   void _calculateReboundingLevels() {
     final double? high = double.tryParse(_highController.text);
@@ -49,14 +24,14 @@ class _FibonacciReboundingPageState extends State<FibonacciReboundingPage> {
     if (low != null && high != null && high > low) {
       final double range = high - low;
       setState(() {
-        _resistanceLevels = {
+        _reboundingLevels = {
           for (double level in _levels)
             '${(level * 100).toStringAsFixed(1)}%': low + (range * level),
         };
       });
     } else {
       setState(() {
-        _resistanceLevels = null;
+        _reboundingLevels = null;
       });
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Please enter valid low and high values.')),
@@ -180,9 +155,9 @@ class _FibonacciReboundingPageState extends State<FibonacciReboundingPage> {
                         ),
                         Row(
                           children: [
-                            if (_resistanceLevels != null)
+                            if (_reboundingLevels != null)
                               Text(
-                                _resistanceLevels![levelStr]
+                                _reboundingLevels![levelStr]
                                         ?.toStringAsFixed(2) ??
                                     '',
                                 style: TextStyle(
