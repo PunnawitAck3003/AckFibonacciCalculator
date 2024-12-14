@@ -22,7 +22,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Fibonacci Calculators'),
+        title: const Text('Ack Fibonacci Calculators'),
         centerTitle: true,
         backgroundColor: Colors.amber[50],
       ),
@@ -44,19 +44,7 @@ class HomePage extends StatelessWidget {
                     ),
                   );
                 },
-                child: Text('Fibonacci Retracement Calculator'),
-              ),
-              SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => FibonacciReboundingPage(),
-                    ),
-                  );
-                },
-                child: Text('Fibonacci Rebounding Calculator'),
+                child: Text('Fibonacci Retracement/Rebounding Calculator'),
               ),
               SizedBox(height: 20),
               ElevatedButton(

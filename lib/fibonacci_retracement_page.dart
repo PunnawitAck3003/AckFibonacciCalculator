@@ -13,8 +13,9 @@ class _FibonacciRetracementPageState extends State<FibonacciRetracementPage> {
   final TextEditingController _lowController = TextEditingController();
   final TextEditingController _newLevelController = TextEditingController();
 
+  bool _isRetracementMode = true;
   Map<String, double>? _retracementLevels;
-  List<double> _levels = levels;  // Using the levels from the imported file
+  List<double> _levels = levels; // Using the levels from the imported file
   Set<double> _importantLevels = importantLevels;
 
   void _calculateRetracementLevels() {
@@ -24,10 +25,17 @@ class _FibonacciRetracementPageState extends State<FibonacciRetracementPage> {
     if (high != null && low != null && high > low) {
       final double range = high - low;
       setState(() {
-        _retracementLevels = {
-          for (double level in _levels)
-            '${(level * 100).toStringAsFixed(1)}%': high - (range * level),
-        };
+        if (_isRetracementMode) {
+          _retracementLevels = {
+            for (double level in _levels)
+              '${(level * 100).toStringAsFixed(1)}%': high - (range * level),
+          };
+        } else {
+          _retracementLevels = {
+            for (double level in _levels)
+              '${(level * 100).toStringAsFixed(1)}%': low + (range * level),
+          };
+        }
       });
     } else {
       setState(() {
@@ -66,7 +74,7 @@ class _FibonacciRetracementPageState extends State<FibonacciRetracementPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Fibonacci Retracement Calculator'),
+        title: Text('Fibonacci ${_isRetracementMode ? 'Retracement' : 'Rebounding'}',),
         centerTitle: true,
         backgroundColor: Colors.greenAccent[100],
       ),
@@ -93,22 +101,28 @@ class _FibonacciRetracementPageState extends State<FibonacciRetracementPage> {
               ),
             ),
             SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: _calculateRetracementLevels,
-              child: Text('Calculate Retracement Levels'),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text('Rebounding'),
+                Switch(
+                  value: _isRetracementMode,
+                  onChanged: (value) {
+                    setState(() {
+                      _isRetracementMode = value;
+                      //_projectionResults = null; // Clear results when switching
+                    });
+                  },
+                ),
+                Text('Retracement'),
+              ],
             ),
+
             SizedBox(height: 16),
             ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => FibonacciReboundingPage(),
-                    ),
-                  );
-                },
-                child: Text('Fibonacci Rebounding Calculator'),
-              ),
+              onPressed: _calculateRetracementLevels,
+              child: Text('Calculate ${_isRetracementMode ? 'Retracement' : 'Rebounding'} Levels'),
+            ),
             SizedBox(height: 16),
             Row(
               children: [
@@ -135,7 +149,8 @@ class _FibonacciRetracementPageState extends State<FibonacciRetracementPage> {
               child: ListView(
                 children: _levels.map((level) {
                   // Convert decimal back to percentage string
-                  final String levelStr = '${(level * 100).toStringAsFixed(1)}%';
+                  final String levelStr =
+                      '${(level * 100).toStringAsFixed(1)}%';
                   final bool isImportant = _importantLevels.contains(level);
                   return Padding(
                     padding: const EdgeInsets.symmetric(vertical: 4.0),
@@ -147,15 +162,23 @@ class _FibonacciRetracementPageState extends State<FibonacciRetracementPage> {
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
-                            color: isImportant ? Colors.red : Colors.black, // Highlight important levels
+                            color: isImportant
+                                ? Colors.red
+                                : Colors.black, // Highlight important levels
                           ),
                         ),
                         Row(
                           children: [
                             if (_retracementLevels != null)
                               Text(
-                                _retracementLevels![levelStr]?.toStringAsFixed(2) ?? '',
-                                style: TextStyle(fontSize: 16, color: isImportant ? Colors.red : Colors.grey[700]),
+                                _retracementLevels![levelStr]
+                                        ?.toStringAsFixed(2) ??
+                                    '',
+                                style: TextStyle(
+                                    fontSize: 16,
+                                    color: isImportant
+                                        ? Colors.red
+                                        : Colors.grey[700]),
                               ),
                             IconButton(
                               icon: Icon(Icons.delete, color: Colors.red),

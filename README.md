@@ -4,7 +4,7 @@ A Flutter project that calculates support/resistances based on Fibonacci retrace
 
 ## Features
 
-- Fibonacci Retracement Calculator
-- Fibonacci Rebounding Calculator
+- Fibonacci Retracement/Rebounding Calculator
+- Fibonacci Internal/External Projection Up/Down Calculator
 
 Punnawit Bhoopat
