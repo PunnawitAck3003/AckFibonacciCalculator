@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_fib1/advanced_carmarilla.dart';
 import 'package:flutter_application_fib1/fibonacci_projection_page.dart';
 import 'package:flutter_application_fib1/fibonacci_rebounding_page.dart';
 import 'package:flutter_application_fib1/fibonacci_retracement_page.dart';
@@ -57,6 +58,18 @@ class HomePage extends StatelessWidget {
                   );
                 },
                 child: Text('Fibonacci Projection Calculator'),
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CamarillaCalculatorPage(),
+                    ),
+                  );
+                },
+                child: Text('Advanced Camarilla Trading Calculator'),
               ),
             ],
           ),
