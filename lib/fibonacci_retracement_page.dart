@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_fib1/fibonacci_rebounding_page.dart';
 import 'fibonacci_levels.dart';
 
 class FibonacciRetracementPage extends StatefulWidget {
+  const FibonacciRetracementPage({super.key});
+
   @override
   _FibonacciRetracementPageState createState() =>
       _FibonacciRetracementPageState();

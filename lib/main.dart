@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_fib1/advanced_carmarilla.dart';
 import 'package:flutter_application_fib1/fibonacci_projection_page.dart';
-import 'package:flutter_application_fib1/fibonacci_rebounding_page.dart';
 import 'package:flutter_application_fib1/fibonacci_retracement_page.dart';
 
 void main() {
