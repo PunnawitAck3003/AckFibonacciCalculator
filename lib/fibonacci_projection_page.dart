@@ -18,7 +18,8 @@ class _FibonacciProjectionPageState extends State<FibonacciProjectionPage> {
   bool _isInternalMode = true; // Toggle state
   bool _isUpMode = true;
   Map<String, double>? _projectionResults;
-  final List<double> _levels = levels; // Using the levels from the imported file
+  final List<double> _levels =
+      levels; // Using the levels from the imported file
   final Set<double> _importantLevels = importantLevels;
 
   void _calculateProjections() {
@@ -102,48 +103,64 @@ class _FibonacciProjectionPageState extends State<FibonacciProjectionPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Fibonacci ${_isInternalMode ? 'Internal' : 'External'} Projection ${_isUpMode ? 'Up' : 'Down'}',
+        title: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+              'Fibonacci ${_isInternalMode ? 'Internal' : 'External'} Projection ${_isUpMode ? 'Up' : 'Down'}'),
         ),
         centerTitle: true,
-        backgroundColor: Colors.orange[100],
+        backgroundColor: (_isUpMode&&_isInternalMode)? Colors.greenAccent
+                      : (_isUpMode&&!_isInternalMode)? Colors.green
+                      : (!_isUpMode&&_isInternalMode)? Colors.redAccent
+                      : Colors.red,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            TextField(
-              controller: _startController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                labelText: 'Start Value (Point 1)',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            SizedBox(height: 16),
-            TextField(
-              controller: _endController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                labelText: 'End Value (Point 2)',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            if (_isInternalMode) // Show Retracement Input Only in Internal Mode
-              Column(
-                children: [
-                  SizedBox(height: 16),
-                  TextField(
-                    controller: _retracementController,
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _startController,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
-                      labelText: 'Custom Value (Point 3)',
+                      labelText: 'Start',
                       border: OutlineInputBorder(),
                     ),
                   ),
-                ],
-              ),
+                ),
+                SizedBox(width: 8),
+                Expanded(
+                  child: TextField(
+                    controller: _endController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: 'End',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 8),
+                if (_isInternalMode)
+                  Expanded(
+                    child: TextField(
+                      controller: _retracementController,
+                      keyboardType: TextInputType.number,
+                      decoration: InputDecoration(
+                        labelText: 'Custom',
+                        border: OutlineInputBorder(),
+                      ),
+                    ),
+                  ),
+                if (_isInternalMode) SizedBox(width: 8),
+                ElevatedButton(
+                  onPressed: _calculateProjections,
+                  child: Text('Calculate Projections'),
+                ),
+              ],
+            ),
             SizedBox(height: 16),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -188,11 +205,6 @@ class _FibonacciProjectionPageState extends State<FibonacciProjectionPage> {
                   ],
                 ),
               ],
-            ),
-            SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: _calculateProjections,
-              child: Text('Calculate Projections'),
             ),
             SizedBox(height: 16),
             Row(

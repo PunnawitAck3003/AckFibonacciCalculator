@@ -26,9 +26,12 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Ack Fibonacci Calculators'),
+        title: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: const Text('Ack Fibonacci Calculators'),
+        ),
         centerTitle: true,
-        backgroundColor: Colors.amber[50],
+        backgroundColor: Colors.amberAccent,
       ),
       body: Center(
         // Center the entire Column widget within the body

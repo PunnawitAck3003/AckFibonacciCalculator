@@ -56,63 +56,76 @@ class _DateButtonComponentState extends State<DateButtonComponent> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        if (!_isS50)
+    final screenWidth = MediaQuery.of(context).size.width;
+    final isSmallScreen = screenWidth < 600;
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+      child: Wrap(
+        spacing: 8.0, // Space between items
+        runSpacing: 4.0, // Space between lines for wrapping
+        alignment: WrapAlignment.center,
+        crossAxisAlignment: WrapCrossAlignment.center,
+        children: [
+          if (!_isS50)
+            _buildDateComponent(
+              date: _selectedDate2,
+              onAdd: () => _changeDate(1, 2),
+              onSubtract: () => _changeDate(-1, 2),
+            ),
+          if (!_isS50)
+            Text(
+              'to',
+              style: TextStyle(
+                fontSize: isSmallScreen ? 14 : 14,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           _buildDateComponent(
-            date: _selectedDate2,
-            onAdd: () => _changeDate(1, 2),
-            onSubtract: () => _changeDate(-1, 2),
+            date: _selectedDate1,
+            onAdd: () => _changeDate(1, 1),
+            onSubtract: () => _changeDate(-1, 1),
           ),
-        if (!_isS50)
-          Text(
-            'to',
-            style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  setState(() {
+                    _isS50 = !_isS50;
+                  });
+                },
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(
+                      vertical: isSmallScreen ? 8 : 12,
+                      horizontal: isSmallScreen ? 12 : 16),
+                  backgroundColor: _isS50 ? Colors.red : Colors.amber,
+                  foregroundColor: Colors.white,
+                ),
+                child: Text(
+                  _generateButtonText(_isS50),
+                  style: TextStyle(fontSize: isSmallScreen ? 14 : 14),
+                ),
+              ),
+              const SizedBox(width: 8),
+              ElevatedButton(
+                onPressed: _toggleOutIn,
+                style: ElevatedButton.styleFrom(
+                  padding: EdgeInsets.symmetric(
+                      vertical: isSmallScreen ? 8 : 12,
+                      horizontal: isSmallScreen ? 12 : 16),
+                  backgroundColor: _isOut ? Colors.red : Colors.green,
+                  foregroundColor: Colors.white,
+                ),
+                child: Text(
+                  _isOut ? 'OUT' : 'IN',
+                  style: TextStyle(fontSize: isSmallScreen ? 14 : 14),
+                ),
+              ),
+            ],
           ),
-        _buildDateComponent(
-          date: _selectedDate1,
-          onAdd: () => _changeDate(1, 1),
-          onSubtract: () => _changeDate(-1, 1),
-        ),
-        Spacer(), // Pushes everything after this to the right
-        Row(
-          mainAxisSize: MainAxisSize.min, // Groups the buttons together
-          children: [
-            ElevatedButton(
-              onPressed: () {
-                setState(() {
-                  _isS50 = !_isS50;
-                });
-              },
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                backgroundColor:
-                    _isS50 ? Colors.red : Colors.amber, // Background color
-                foregroundColor: Colors.white, // Text color
-              ),
-              child: Text(
-                _generateButtonText(_isS50),
-                style: TextStyle(fontSize: 14),
-              ),
-            ),
-            SizedBox(width: 3),
-            ElevatedButton(
-              onPressed: _toggleOutIn,
-              style: ElevatedButton.styleFrom(
-                padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                backgroundColor:
-                    _isOut ? Colors.red : Colors.green, // Background color
-                foregroundColor: Colors.white, // Text color
-              ),
-              child: Text(
-                _isOut ? 'OUT' : 'IN',
-                style: TextStyle(fontSize: 14),
-              ),
-            ),
-          ],
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -121,19 +134,30 @@ class _DateButtonComponentState extends State<DateButtonComponent> {
     required VoidCallback onAdd,
     required VoidCallback onSubtract,
   }) {
+    final isSmallScreen =
+        MediaQuery.of(context).size.width < 600; // Check screen size
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         IconButton(
-          icon: Icon(Icons.remove_circle, size: 20, color: Colors.red),
+          icon: Icon(
+            Icons.remove_circle,
+            size: isSmallScreen ? 16 : 20,
+            color: Colors.red,
+          ),
           onPressed: onSubtract,
         ),
         Text(
           _formatDate(date),
-          style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+          style: TextStyle(
+              fontSize: isSmallScreen ? 14 : 14, fontWeight: FontWeight.bold),
         ),
         IconButton(
-          icon: Icon(Icons.add_circle, size: 20, color: Colors.green),
+          icon: Icon(
+            Icons.add_circle,
+            size: isSmallScreen ? 16 : 20,
+            color: Colors.green,
+          ),
           onPressed: onAdd,
         ),
       ],

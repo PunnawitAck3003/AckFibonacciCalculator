@@ -138,9 +138,12 @@ class _CamarillaCalculatorPageState extends State<CamarillaCalculatorPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Advanced Camarilla Calculator'),
+        title: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: const Text('Advanced Camarilla Calculator'),
+        ),
         centerTitle: true,
-        backgroundColor: Colors.blueAccent[100],
+        backgroundColor: Colors.tealAccent,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -182,13 +185,15 @@ class _CamarillaCalculatorPageState extends State<CamarillaCalculatorPage> {
                     ),
                   ),
                 ),
+                SizedBox(width: 8),
+                ElevatedButton(
+                  onPressed: _calculateCamarillaLevels,
+                  child: Text('Calculate Levels'),
+                ),
               ],
             ),
-            SizedBox(height: 8),
-            ElevatedButton(
-              onPressed: _calculateCamarillaLevels,
-              child: Text('Calculate Levels'),
-            ),
+            //SizedBox(height: 8),
+
             SizedBox(height: 8),
             // date time component here
             DateButtonComponent(),

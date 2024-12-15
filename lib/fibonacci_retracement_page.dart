@@ -16,7 +16,8 @@ class _FibonacciRetracementPageState extends State<FibonacciRetracementPage> {
 
   bool _isRetracementMode = true;
   Map<String, double>? _retracementLevels;
-  final List<double> _levels = levels; // Using the levels from the imported file
+  final List<double> _levels =
+      levels; // Using the levels from the imported file
   final Set<double> _importantLevels = importantLevels;
 
   void _calculateRetracementLevels() {
@@ -75,54 +76,50 @@ class _FibonacciRetracementPageState extends State<FibonacciRetracementPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Fibonacci ${_isRetracementMode ? 'Retracement' : 'Rebounding'}',),
+        title: FittedBox(
+          fit: BoxFit.scaleDown,
+          child: Text(
+              'Fibonacci ${_isRetracementMode ? 'Retracement' : 'Rebounding'}'),
+        ),
+        //title: Text('Fibonacci ${_isRetracementMode ? 'Retracement' : 'Rebounding'}',),
         centerTitle: true,
-        backgroundColor: Colors.greenAccent[100],
+        backgroundColor: _isRetracementMode? Colors.pinkAccent : Colors.lightGreenAccent,
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            TextField(
-              controller: _highController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                labelText: 'High Value',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            SizedBox(height: 16),
-            TextField(
-              controller: _lowController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                labelText: 'Low Value',
-                border: OutlineInputBorder(),
-              ),
-            ),
-            SizedBox(height: 16),
             Row(
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Rebounding'),
-                Switch(
-                  value: _isRetracementMode,
-                  onChanged: (value) {
-                    setState(() {
-                      _isRetracementMode = value;
-                      //_projectionResults = null; // Clear results when switching
-                    });
-                  },
+                Expanded(
+                  child: TextField(
+                    controller: _highController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: 'High',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
                 ),
-                Text('Retracement'),
+                SizedBox(width: 8),
+                Expanded(
+                  child: TextField(
+                    controller: _lowController,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: 'Low',
+                      border: OutlineInputBorder(),
+                    ),
+                  ),
+                ),
+                SizedBox(width: 8),
+                ElevatedButton(
+                  onPressed: _calculateRetracementLevels,
+                  child: Text(
+                      'Calculate ${_isRetracementMode ? 'Retracement' : 'Rebounding'} Levels'),
+                ),
               ],
-            ),
-
-            SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: _calculateRetracementLevels,
-              child: Text('Calculate ${_isRetracementMode ? 'Retracement' : 'Rebounding'} Levels'),
             ),
             SizedBox(height: 16),
             Row(
@@ -132,15 +129,32 @@ class _FibonacciRetracementPageState extends State<FibonacciRetracementPage> {
                     controller: _newLevelController,
                     keyboardType: TextInputType.number,
                     decoration: InputDecoration(
-                      labelText: 'Add New Level (%)',
+                      labelText: 'Add New Level %',
                       border: OutlineInputBorder(),
                     ),
                   ),
                 ),
-                SizedBox(width: 8),
+                SizedBox(width: 4),
                 ElevatedButton(
                   onPressed: _addNewLevel,
                   child: Text('Add'),
+                ),
+                SizedBox(width: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('Rebounding'),
+                    Switch(
+                      value: _isRetracementMode,
+                      onChanged: (value) {
+                        setState(() {
+                          _isRetracementMode = value;
+                          //_projectionResults = null; // Clear results when switching
+                        });
+                      },
+                    ),
+                    Text('Retracement'),
+                  ],
                 ),
               ],
             ),
