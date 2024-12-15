@@ -1,5 +1,5 @@
 // fibonacci_levels.dart
-library fibonacci_levels;
+//library fibonacci_levels;
 
 List<double> levels = [
   0.090, 0.146, 0.236, 0.333, 0.382, 0.500, 0.618, 0.667, 0.786, 0.887,

@@ -16,8 +16,8 @@ class _FibonacciRetracementPageState extends State<FibonacciRetracementPage> {
 
   bool _isRetracementMode = true;
   Map<String, double>? _retracementLevels;
-  List<double> _levels = levels; // Using the levels from the imported file
-  Set<double> _importantLevels = importantLevels;
+  final List<double> _levels = levels; // Using the levels from the imported file
+  final Set<double> _importantLevels = importantLevels;
 
   void _calculateRetracementLevels() {
     final double? high = double.tryParse(_highController.text);

@@ -8,6 +8,8 @@ void main() {
 }
 
 class FibonacciApp extends StatelessWidget {
+  const FibonacciApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -18,6 +20,8 @@ class FibonacciApp extends StatelessWidget {
 }
 
 class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

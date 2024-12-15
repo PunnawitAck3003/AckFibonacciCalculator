@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'fibonacci_levels.dart';
 
 class FibonacciProjectionPage extends StatefulWidget {
+  const FibonacciProjectionPage({super.key});
+
   @override
   _FibonacciProjectionPageState createState() =>
       _FibonacciProjectionPageState();
@@ -16,8 +18,8 @@ class _FibonacciProjectionPageState extends State<FibonacciProjectionPage> {
   bool _isInternalMode = true; // Toggle state
   bool _isUpMode = true;
   Map<String, double>? _projectionResults;
-  List<double> _levels = levels; // Using the levels from the imported file
-  Set<double> _importantLevels = importantLevels;
+  final List<double> _levels = levels; // Using the levels from the imported file
+  final Set<double> _importantLevels = importantLevels;
 
   void _calculateProjections() {
     final double? start = double.tryParse(_startController.text);

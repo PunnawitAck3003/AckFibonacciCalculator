@@ -3,6 +3,8 @@ import 'package:flutter_application_fib1/fibonacci_retracement_page.dart';
 import 'fibonacci_levels.dart';
 
 class FibonacciReboundingPage extends StatefulWidget {
+  const FibonacciReboundingPage({super.key});
+
   @override
   _FibonacciReboundingPageState createState() =>
       _FibonacciReboundingPageState();
@@ -14,8 +16,8 @@ class _FibonacciReboundingPageState extends State<FibonacciReboundingPage> {
   final TextEditingController _newLevelController = TextEditingController();
 
   Map<String, double>? _reboundingLevels;
-  List<double> _levels = levels;  // Using the levels from the imported file
-  Set<double> _importantLevels = importantLevels;
+  final List<double> _levels = levels;  // Using the levels from the imported file
+  final Set<double> _importantLevels = importantLevels;
 
   void _calculateReboundingLevels() {
     final double? high = double.tryParse(_highController.text);

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_fib1/custom_date.dart';
 
 class CamarillaCalculatorPage extends StatefulWidget {
+  const CamarillaCalculatorPage({super.key});
+
   @override
   _CamarillaCalculatorPageState createState() =>
       _CamarillaCalculatorPageState();

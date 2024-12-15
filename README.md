@@ -6,5 +6,6 @@ A Flutter project that calculates support/resistances based on Fibonacci retrace
 
 - Fibonacci Retracement/Rebounding Calculator
 - Fibonacci Internal/External Projection Up/Down Calculator
+- Advanced Camarilla Trading Calculator
 
 Punnawit Bhoopat

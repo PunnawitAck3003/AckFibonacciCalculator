@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class DateButtonComponent extends StatefulWidget {
+  const DateButtonComponent({super.key});
+
   @override
   _DateButtonComponentState createState() => _DateButtonComponentState();
 }
