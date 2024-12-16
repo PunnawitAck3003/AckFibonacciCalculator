@@ -157,7 +157,7 @@ class _FibonacciProjectionPageState extends State<FibonacciProjectionPage> {
                 if (_isInternalMode) SizedBox(width: 8),
                 ElevatedButton(
                   onPressed: _calculateProjections,
-                  child: Text('Calculate Projections'),
+                  child: Text('Cal.'),
                 ),
               ],
             ),

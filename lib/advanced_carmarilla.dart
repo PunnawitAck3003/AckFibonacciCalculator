@@ -56,83 +56,97 @@ class _CamarillaCalculatorPageState extends State<CamarillaCalculatorPage> {
       double high, double low, double close, double range) {
     return {
       'H10': close + (1.7798 * range),
-      'H9': close + (1.65 * range),
-      'H8 ': close + (1.5202 * range),
-      'H7 ': close + (1.3596 * range),
-      'H6 ': (high / low) * close,
-      'H5 ': ((high / low) * close + close + (0.55 * range)) / 2,
-      'H4 ': close + (0.55 * range),
-      'H3 ': close + (0.275 * range),
-      'H2 ': close + (0.18333333 * range),
-      'H1 ': close + (0.09166666 * range),
-      'L1 ': close - (0.09166666 * range),
-      'L2 ': close - (0.18333333 * range),
-      'L3 ': close - (0.275 * range),
-      'L4 ': close - (0.55 * range),
-      'L5 ': 2 * close - ((high / low) * close + close + (0.55 * range)) / 2,
-      'L6 ': close - (((high / low) * close) - close),
-      'L7 ': close - (1.3596 * range),
-      'L8 ': close - (1.5202 * range),
-      'L9 ': close - (1.65 * range),
+      'H09': close + (1.65 * range),
+      'H08': close + (1.5202 * range),
+      'H07': close + (1.3596 * range),
+      'H06': (high / low) * close,
+      'H05': ((high / low) * close + close + (0.55 * range)) / 2,
+      'H04': close + (0.55 * range),
+      'H03': close + (0.275 * range),
+      'H02': close + (0.18333333 * range),
+      'H01': close + (0.09166666 * range),
+      'L01': close - (0.09166666 * range),
+      'L02': close - (0.18333333 * range),
+      'L03': close - (0.275 * range),
+      'L04': close - (0.55 * range),
+      'L05': 2 * close - ((high / low) * close + close + (0.55 * range)) / 2,
+      'L06': close - (((high / low) * close) - close),
+      'L07': close - (1.3596 * range),
+      'L08': close - (1.5202 * range),
+      'L09': close - (1.65 * range),
       'L10': close - (1.7798 * range),
     };
   }
 
   Widget _buildCamarillaLevels() {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        final double horizontalPadding = constraints.maxWidth / 4;
 
-        return ListView(
-          children: _camarillaLevels.entries.map((entry) {
-            final String key = entry.key.trim();
-            final double value = entry.value;
-            final bool isImportantGreen = key == 'H5' || key == 'H6';
-            final bool isImportantRed = key == 'L5' || key == 'L6';
+  return LayoutBuilder(
+    builder: (context, constraints) {
+      final double horizontalPadding = constraints.maxWidth / 3;
 
-            return Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: horizontalPadding,
-                  vertical: 1.0), // Responsive padding
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  // Key aligned to left
-                  Expanded(
-                    child: Text(
-                      key,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: isImportantGreen
-                            ? Colors.green
-                            : isImportantRed
-                                ? Colors.red
-                                : Colors.black,
-                        fontSize: 16,
-                      ),
-                    ),
+      return ListView(
+        shrinkWrap: true, // Prevent unnecessary space in ListView
+        physics: NeverScrollableScrollPhysics(), // Disable scrolling if embedded
+        children: _camarillaLevels.entries.map((entry) {
+          final String key = entry.key.trim();
+          final double value = entry.value;
+
+          final redKeys = {
+            'H01', 'H02', 'H03', 'H04', 'H07', 'H08', 'H09', 'H10'
+          };
+          final redImportantKeys = {'H05', 'H06'};
+          final greenKeys = {
+            'L01', 'L02', 'L03', 'L04', 'L07', 'L08', 'L09', 'L10'
+          };
+          final greenImportantKeys = {'L05', 'L06'};
+
+          final bool isRed = redKeys.contains(key);
+          final bool isImportantRed = redImportantKeys.contains(key);
+          final bool isGreen = greenKeys.contains(key);
+          final bool isImportantGreen = greenImportantKeys.contains(key);
+
+          final Color textColor = isImportantGreen
+              ? Colors.green[900]!
+              : isImportantRed
+                  ? Colors.red[900]!
+                  : isGreen
+                      ? Colors.green
+                      : Colors.red;
+
+          return Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: 0.5,
+              horizontal: horizontalPadding,   // Reduce vertical padding for tighter spacing
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min, // Prevent Row from expanding
+              mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align ends
+              children: [
+                Text(
+                  key,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: textColor,
+                    fontSize: 16,
                   ),
-                  // Value aligned to right
-                  Text(
-                    value.toStringAsFixed(2),
-                    textAlign: TextAlign.right,
-                    style: TextStyle(
-                      color: isImportantGreen
-                          ? Colors.green
-                          : isImportantRed
-                              ? Colors.red
-                              : Colors.grey[700],
-                      fontSize: 16,
-                    ),
+                ),
+                SizedBox(width: 8),
+                Text(
+                  value.toStringAsFixed(2),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: textColor,
+                    fontSize: 16,
                   ),
-                ],
-              ),
-            );
-          }).toList(),
-        );
-      },
-    );
-  }
+                ),
+              ],
+            ),
+          );
+        }).toList(),
+      );
+    },
+  );
+}
 
   @override
   Widget build(BuildContext context) {
@@ -188,7 +202,7 @@ class _CamarillaCalculatorPageState extends State<CamarillaCalculatorPage> {
                 SizedBox(width: 8),
                 ElevatedButton(
                   onPressed: _calculateCamarillaLevels,
-                  child: Text('Calculate Levels'),
+                  child: Text('Cal.'),
                 ),
               ],
             ),

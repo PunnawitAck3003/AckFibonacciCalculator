@@ -117,7 +117,7 @@ class _FibonacciRetracementPageState extends State<FibonacciRetracementPage> {
                 ElevatedButton(
                   onPressed: _calculateRetracementLevels,
                   child: Text(
-                      'Calculate ${_isRetracementMode ? 'Retracement' : 'Rebounding'} Levels'),
+                      'Cal.'),
                 ),
               ],
             ),
