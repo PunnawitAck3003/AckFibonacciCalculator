@@ -79,74 +79,89 @@ class _CamarillaCalculatorPageState extends State<CamarillaCalculatorPage> {
   }
 
   Widget _buildCamarillaLevels() {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final double horizontalPadding = constraints.maxWidth / 3;
 
-  return LayoutBuilder(
-    builder: (context, constraints) {
-      final double horizontalPadding = constraints.maxWidth / 3;
+        return ListView(
+          shrinkWrap: true, // Prevent unnecessary space in ListView
+          physics:
+              NeverScrollableScrollPhysics(), // Disable scrolling if embedded
+          children: _camarillaLevels.entries.map((entry) {
+            final String key = entry.key.trim();
+            final double value = entry.value;
 
-      return ListView(
-        shrinkWrap: true, // Prevent unnecessary space in ListView
-        physics: NeverScrollableScrollPhysics(), // Disable scrolling if embedded
-        children: _camarillaLevels.entries.map((entry) {
-          final String key = entry.key.trim();
-          final double value = entry.value;
+            final redKeys = {
+              'H01',
+              'H02',
+              'H03',
+              'H04',
+              'H07',
+              'H08',
+              'H09',
+              'H10'
+            };
+            final redImportantKeys = {'H05', 'H06'};
+            final greenKeys = {
+              'L01',
+              'L02',
+              'L03',
+              'L04',
+              'L07',
+              'L08',
+              'L09',
+              'L10'
+            };
+            final greenImportantKeys = {'L05', 'L06'};
 
-          final redKeys = {
-            'H01', 'H02', 'H03', 'H04', 'H07', 'H08', 'H09', 'H10'
-          };
-          final redImportantKeys = {'H05', 'H06'};
-          final greenKeys = {
-            'L01', 'L02', 'L03', 'L04', 'L07', 'L08', 'L09', 'L10'
-          };
-          final greenImportantKeys = {'L05', 'L06'};
+            final bool isRed = redKeys.contains(key);
+            final bool isImportantRed = redImportantKeys.contains(key);
+            final bool isGreen = greenKeys.contains(key);
+            final bool isImportantGreen = greenImportantKeys.contains(key);
 
-          final bool isRed = redKeys.contains(key);
-          final bool isImportantRed = redImportantKeys.contains(key);
-          final bool isGreen = greenKeys.contains(key);
-          final bool isImportantGreen = greenImportantKeys.contains(key);
+            final Color textColor = isImportantGreen
+                ? Colors.green[900]!
+                : isImportantRed
+                    ? Colors.red[900]!
+                    : isGreen
+                        ? Colors.green
+                        : Colors.red;
 
-          final Color textColor = isImportantGreen
-              ? Colors.green[900]!
-              : isImportantRed
-                  ? Colors.red[900]!
-                  : isGreen
-                      ? Colors.green
-                      : Colors.red;
-
-          return Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: 0.5,
-              horizontal: horizontalPadding,   // Reduce vertical padding for tighter spacing
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min, // Prevent Row from expanding
-              mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align ends
-              children: [
-                Text(
-                  key,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: textColor,
-                    fontSize: 16,
+            return Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: 0.5,
+                horizontal:
+                    horizontalPadding, // Reduce vertical padding for tighter spacing
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min, // Prevent Row from expanding
+                mainAxisAlignment: MainAxisAlignment.spaceBetween, // Align ends
+                children: [
+                  Text(
+                    key,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: textColor,
+                      fontSize: 16,
+                    ),
                   ),
-                ),
-                SizedBox(width: 8),
-                Text(
-                  value.toStringAsFixed(2),
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: textColor,
-                    fontSize: 16,
+                  SizedBox(width: 8),
+                  Text(
+                    value.toStringAsFixed(2),
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: textColor,
+                      fontSize: 16,
+                    ),
                   ),
-                ),
-              ],
-            ),
-          );
-        }).toList(),
-      );
-    },
-  );
-}
+                ],
+              ),
+            );
+          }).toList(),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -208,11 +223,20 @@ class _CamarillaCalculatorPageState extends State<CamarillaCalculatorPage> {
             ),
             //SizedBox(height: 8),
 
-            SizedBox(height: 8),
+            SizedBox(height: 1),
             // date time component here
             DateButtonComponent(),
-            SizedBox(height: 8),
-            Expanded(child: _buildCamarillaLevels()), // Levels shown here
+            SizedBox(height: 1),
+            Expanded(
+              child: InteractiveViewer(
+                boundaryMargin: const EdgeInsets.all(
+                    1), // Allows panning outside the boundary
+                minScale: 0.5, // Minimum zoom scale
+                maxScale: 3.0, // Maximum zoom scale
+                child: _buildCamarillaLevels(),
+              ),
+            ),
+// Levels shown here
           ],
         ),
       ),

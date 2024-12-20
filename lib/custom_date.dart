@@ -11,6 +11,7 @@ class DateButtonComponent extends StatefulWidget {
 class _DateButtonComponentState extends State<DateButtonComponent> {
   DateTime _selectedDate1 = DateTime.now();
   DateTime _selectedDate2 = DateTime.now();
+  DateTime _selectedDate3 = DateTime.now();
   bool _isOut = true;
   bool _isS50 = true;
 
@@ -22,8 +23,10 @@ class _DateButtonComponentState extends State<DateButtonComponent> {
     setState(() {
       if (dateIndex == 1) {
         _selectedDate1 = _selectedDate1.add(Duration(days: days));
-      } else {
+      } else if (dateIndex == 2){
         _selectedDate2 = _selectedDate2.add(Duration(days: days));
+      } else {
+        _selectedDate3 = _selectedDate3.add(Duration(days: days));
       }
     });
   }
@@ -60,13 +63,22 @@ class _DateButtonComponentState extends State<DateButtonComponent> {
     final isSmallScreen = screenWidth < 600;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+      padding: const EdgeInsets.symmetric(horizontal: 4.0, vertical: 1.0),
       child: Wrap(
-        spacing: 8.0, // Space between items
-        runSpacing: 4.0, // Space between lines for wrapping
+        spacing: 4.0, // Space between items
+        runSpacing: 0.5, // Space between lines for wrapping
         alignment: WrapAlignment.center,
         crossAxisAlignment: WrapCrossAlignment.center,
         children: [
+          Row(
+            children: [
+              _buildDateComponent(
+                date: _selectedDate1,
+                onAdd: () => _changeDate(1, 1),
+                onSubtract: () => _changeDate(-1, 1),
+              ),
+            ],
+          ),
           if (!_isS50)
             _buildDateComponent(
               date: _selectedDate2,
@@ -82,9 +94,9 @@ class _DateButtonComponentState extends State<DateButtonComponent> {
               ),
             ),
           _buildDateComponent(
-            date: _selectedDate1,
-            onAdd: () => _changeDate(1, 1),
-            onSubtract: () => _changeDate(-1, 1),
+            date: _selectedDate3,
+            onAdd: () => _changeDate(1, 3),
+            onSubtract: () => _changeDate(-1, 3),
           ),
           Row(
             mainAxisSize: MainAxisSize.min,
